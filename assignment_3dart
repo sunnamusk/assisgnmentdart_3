@@ -1,0 +1,101 @@
+from abc import ABC, abstractmethod
+
+# Encapsulation Example
+class Person:
+    def __init__(self, name, age):
+        self.__name = name   # private variable
+        self.__age = age     # private variable
+    
+    # Getter for name
+    def get_name(self):
+        return self.__name
+    
+    # Setter for name
+    def set_name(self, name):
+        self.__name = name
+    
+    # Getter for age
+    def get_age(self):
+        return self.__age
+    
+    # Setter for age
+    def set_age(self, age):
+        if age > 0:
+            self.__age = age
+        else:
+            print("Age must be a positive number")
+
+# Inheritance Example
+class Student(Person):
+    def __init__(self, name, age, student_id):
+        super().__init__(name, age)  # Call the superclass constructor
+        self.student_id = student_id
+    
+    def get_student_info(self):
+        return f"Name: {self.get_name()}, Age: {self.get_age()}, Student ID: {self.student_id}"
+
+# Polymorphism Example (Method Overriding)
+class Teacher(Person):
+    def __init__(self, name, age, subject):
+        super().__init__(name, age)
+        self.subject = subject
+    
+    # Method overriding
+    def display_info(self):
+        return f"Teacher: {self.get_name()}, Age: {self.get_age()}, Subject: {self.subject}"
+
+class Student(Person):
+    def __init__(self, name, age, student_id):
+        super().__init__(name, age)
+        self.student_id = student_id
+    
+    # Method overriding
+    def display_info(self):
+        return f"Student: {self.get_name()}, Age: {self.get_age()}, Student ID: {self.student_id}"
+
+# Abstraction Example
+class Employee(ABC):
+    
+    @abstractmethod
+    def get_salary(self):
+        pass
+
+class FullTimeEmployee(Employee):
+    def __init__(self, salary):
+        self.salary = salary
+    
+    # Implementing abstract method
+    def get_salary(self):
+        return f"Full-Time Employee Salary: ${self.salary}"
+
+class PartTimeEmployee(Employee):
+    def __init__(self, hourly_rate, hours_worked):
+        self.hourly_rate = hourly_rate
+        self.hours_worked = hours_worked
+    
+    # Implementing abstract method
+    def get_salary(self):
+        return f"Part-Time Employee Salary: ${self.hourly_rate * self.hours_worked}"
+
+# Main test code
+
+# Test Encapsulation
+print("=== Encapsulation ===")
+person = Person("John", 30)
+print(person.get_name())  # Output: John
+person.set_age(31)
+print(person.get_age())   # Output: 31
+
+# Test Inheritance and Polymorphism
+print("\n=== Inheritance and Polymorphism ===")
+student = Student("Alice", 20, "S12345")
+teacher = Teacher("Mr. Smith", 45, "Mathematics")
+print(student.display_info())  # Output: Student: Alice, Age: 20, Student ID: S12345
+print(teacher.display_info())  # Output: Teacher: Mr. Smith, Age: 45, Subject: Mathematics
+
+# Test Abstraction
+print("\n=== Abstraction ===")
+full_time = FullTimeEmployee(5000)
+part_time = PartTimeEmployee(20, 80)
+print(full_time.get_salary())  # Output: Full-Time Employee Salary: $5000
+print(part_time.get_salary())  # Output: Part-Time Employee Salary: $1600
